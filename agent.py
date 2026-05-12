@@ -30,7 +30,7 @@ tools = [
 
 def run_tool(name, inputs):
     if name == "read_file":
-        path = inputs["path"]
+        path = os.path.expanduser(inputs["path"])
         if not os.path.exists(path):
             return f"エラー: ファイルが見つかりません: {path}"
         with open(path, encoding="utf-8", errors="replace") as f:
@@ -40,7 +40,7 @@ def run_tool(name, inputs):
         return content
 
     if name == "list_files":
-        directory = inputs.get("directory", ".")
+        directory = os.path.expanduser(inputs.get("directory", "."))
         if not os.path.exists(directory):
             return f"エラー: ディレクトリが見つかりません: {directory}"
         files = os.listdir(directory)
